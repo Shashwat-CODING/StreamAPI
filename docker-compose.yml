@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   # Development service
-  flux-tube-dev:
+  vid-tube-dev:
     build:
       context: .
       target: development
@@ -19,7 +19,7 @@ services:
       - dev
 
   # Production service
-  flux-tube-prod:
+  vid-tube-prod:
     build:
       context: .
       target: production
@@ -33,7 +33,7 @@ services:
       - prod
 
   # Production service with custom port
-  flux-tube-custom:
+  vid-tube-custom:
     build:
       context: .
       target: production

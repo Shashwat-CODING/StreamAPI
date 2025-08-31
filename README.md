@@ -1,6 +1,6 @@
-# Docker Guide for VideoTube
+# Docker Guide for Vid-Tube
 
-This guide explains how to run VideoTube using Docker and Docker Compose for both development and production environments.
+This guide explains how to run VidTube using Docker and Docker Compose for both development and production environments.
 
 ## Prerequisites
 
@@ -40,10 +40,10 @@ docker-compose --profile custom up --build -d
 #### Build the Image
 ```bash
 # Build development image
-docker build --target development -t flux-tube:dev .
+docker build --target development -t vid-tube:dev .
 
 # Build production image
-docker build --target production -t flux-tube:prod .
+docker build --target production -t vid-tube:prod .
 ```
 
 #### Run the Container
@@ -54,7 +54,7 @@ docker run -p 5000:5000 \
   -v $(pwd):/app \
   -v /app/node_modules \
   -e NODE_ENV=development \
-  flux-tube:dev
+  vid-tube:dev
 ```
 
 ##### Production
@@ -62,7 +62,7 @@ docker run -p 5000:5000 \
 docker run -p 5000:5000 \
   -e NODE_ENV=production \
   --restart unless-stopped \
-  flux-tube:prod
+  vid-tube:prod
 ```
 
 ## Docker Compose Profiles
@@ -104,29 +104,29 @@ PORT=5000
 ### Building Images
 ```bash
 # Build all stages
-docker build -t flux-tube .
+docker build -t vid-tube .
 
 # Build specific stage
-docker build --target development -t flux-tube:dev .
-docker build --target production -t flux-tube:prod .
+docker build --target development -t vid-tube:dev .
+docker build --target production -t vid-tube:prod .
 
 # Build with no cache
-docker build --no-cache -t flux-tube .
+docker build --no-cache -t vid-tube .
 ```
 
 ### Running Containers
 ```bash
 # Run in foreground
-docker run -p 5000:5000 flux-tube:prod
+docker run -p 5000:5000 vid-tube:prod
 
 # Run in background
-docker run -d -p 5000:5000 --name flux-tube flux-tube:prod
+docker run -d -p 5000:5000 --name vid-tube vid-tube:prod
 
 # Run with custom environment
-docker run -p 5000:5000 -e NODE_ENV=development flux-tube:dev
+docker run -p 5000:5000 -e NODE_ENV=development vid-tube:dev
 
 # Run with volume mounting
-docker run -p 5000:5000 -v $(pwd):/app flux-tube:dev
+docker run -p 5000:5000 -v $(pwd):/app vid-tube:dev
 ```
 
 ### Managing Containers
@@ -135,19 +135,19 @@ docker run -p 5000:5000 -v $(pwd):/app flux-tube:dev
 docker ps
 
 # Stop container
-docker stop flux-tube
+docker stop vid-tube
 
 # Remove container
-docker rm flux-tube
+docker rm vid-tube
 
 # View logs
-docker logs flux-tube
+docker logs vid-tube
 
 # Follow logs
-docker logs -f flux-tube
+docker logs -f vid-tube
 
 # Execute commands in container
-docker exec -it flux-tube sh
+docker exec -it vid-tube sh
 ```
 
 ### Docker Compose Commands
@@ -174,7 +174,7 @@ docker-compose logs
 docker-compose logs -f
 
 # Scale services
-docker-compose up --scale flux-tube-prod=3
+docker-compose up --scale vid-tube-prod=3
 ```
 
 ## Multi-Stage Build Benefits
@@ -202,10 +202,10 @@ The production container includes health checks:
 
 ```bash
 # Check container health
-docker inspect --format='{{.State.Health.Status}}' flux-tube
+docker inspect --format='{{.State.Health.Status}}' vid-tube
 
 # View health check logs
-docker inspect --format='{{range .State.Health.Log}}{{.Output}}{{end}}' flux-tube
+docker inspect --format='{{range .State.Health.Log}}{{.Output}}{{end}}' vid-tube
 ```
 
 ## Troubleshooting
@@ -218,13 +218,13 @@ docker inspect --format='{{range .State.Health.Log}}{{.Output}}{{end}}' flux-tub
 lsof -i :5000
 
 # Use different port
-docker run -p 3000:5000 flux-tube:prod
+docker run -p 3000:5000 vid-tube:prod
 ```
 
 #### Permission Issues
 ```bash
 # Fix volume permissions
-docker run -p 5000:5000 -v $(pwd):/app:delegated flux-tube:dev
+docker run -p 5000:5000 -v $(pwd):/app:delegated vid-tube:dev
 ```
 
 #### Build Failures
@@ -233,16 +233,16 @@ docker run -p 5000:5000 -v $(pwd):/app:delegated flux-tube:dev
 docker system prune -a
 
 # Rebuild without cache
-docker build --no-cache -t flux-tube .
+docker build --no-cache -t vid-tube .
 ```
 
 #### Container Won't Start
 ```bash
 # Check container logs
-docker logs flux-tube
+docker logs vid-tube
 
 # Run with interactive shell
-docker run -it --rm flux-tube:prod sh
+docker run -it --rm vid-tube:prod sh
 ```
 
 ### Debugging
@@ -250,19 +250,19 @@ docker run -it --rm flux-tube:prod sh
 #### Access Container Shell
 ```bash
 # Development container
-docker exec -it flux-tube-dev sh
+docker exec -it vid-tube-dev sh
 
 # Production container
-docker exec -it flux-tube-prod sh
+docker exec -it vid-tube-prod sh
 ```
 
 #### View Application Logs
 ```bash
 # Docker logs
-docker logs flux-tube
+docker logs vid-tube
 
 # Application logs inside container
-docker exec flux-tube cat /app/logs/app.log
+docker exec vid-tube cat /app/logs/app.log
 ```
 
 #### Check Network Connectivity
@@ -271,7 +271,7 @@ docker exec flux-tube cat /app/logs/app.log
 curl http://localhost:5000/api/v1/search/hello/1
 
 # Test from inside container
-docker exec flux-tube wget -qO- http://localhost:5000/
+docker exec vid-tube wget -qO- http://localhost:5000/
 ```
 
 ## Production Deployment
@@ -291,10 +291,10 @@ NODE_ENV=production docker-compose --profile prod up -d
 docker swarm init
 
 # Deploy stack
-docker stack deploy -c docker-compose.yml flux-tube
+docker stack deploy -c docker-compose.yml vid-tube
 
 # Scale service
-docker service scale flux-tube_flux-tube-prod=3
+docker service scale vid-tube_vid-tube-prod=3
 ```
 
 ### Using Kubernetes
@@ -304,7 +304,7 @@ kubectl apply -f k8s-deployment.yaml
 
 # Check status
 kubectl get pods
-kubectl logs deployment/flux-tube
+kubectl logs deployment/vid-tube
 ```
 
 ## Performance Optimization
@@ -325,7 +325,7 @@ kubectl logs deployment/flux-tube
 docker run -p 5000:5000 \
   --memory=512m \
   --cpus=1.0 \
-  flux-tube:prod
+  vid-tube:prod
 ```
 
 ## Security Considerations
@@ -348,19 +348,19 @@ docker run -p 5000:5000 \
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 # Monitor resource usage
-docker stats flux-tube
+docker stats vid-tube
 ```
 
 ### Log Management
 ```bash
 # View application logs
-docker logs flux-tube
+docker logs vid-tube
 
 # Follow logs in real-time
-docker logs -f flux-tube
+docker logs -f vid-tube
 
 # Export logs
-docker logs flux-tube > app.log
+docker logs vid-tube > app.log
 ```
 
 ## Backup and Recovery
@@ -368,16 +368,16 @@ docker logs flux-tube > app.log
 ### Data Backup
 ```bash
 # Backup application data
-docker run --rm -v flux-tube_data:/data -v $(pwd):/backup alpine tar czf /backup/app-data.tar.gz -C /data .
+docker run --rm -v vid-tube_data:/data -v $(pwd):/backup alpine tar czf /backup/app-data.tar.gz -C /data .
 ```
 
 ### Image Backup
 ```bash
 # Save image to file
-docker save flux-tube:prod > flux-tube-prod.tar
+docker save vid-tube:prod > vid-tube-prod.tar
 
 # Load image from file
-docker load < flux-tube-prod.tar
+docker load < vid-tube-prod.tar
 ```
 
 ## Support

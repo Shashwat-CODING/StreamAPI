@@ -3,303 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VideoTube - Under Development</title>
+    <title>VideoTube - Dark</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.10/hls.min.js"></script>
     <style>
-        body {
-            font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #3a6ea5 0%, #004e92 100%);
-            color: #000;
-            font-size: 11px;
-            overflow-x: hidden;
         }
 
-        /* Under Development Page */
-        .dev-container {
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0d0d0d;
+            color: #e0e0e0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Header */
+        .header {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 56px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            padding: 0 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #e0e0e0;
+            margin-right: 32px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #8B0000;
+            border-radius: 4px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .dev-window {
-            background: #ece9d8;
-            border: 3px outset #ece9d8;
-            width: 400px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-        }
-
-        .dev-titlebar {
-            background: linear-gradient(to bottom, #0a58b0 0%, #003d79 100%);
             color: white;
-            padding: 4px 8px;
             font-weight: bold;
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-size: 14px;
+            margin-right: 8px;
+            border: 1px solid #660000;
         }
 
-        .window-controls {
-            display: flex;
-            gap: 2px;
-        }
-
-        .control-btn {
-            width: 16px;
-            height: 14px;
-            background: #c0c0c0;
-            border: 1px outset #c0c0c0;
-            font-size: 9px;
-            text-align: center;
-            line-height: 12px;
-            cursor: pointer;
-        }
-
-        .minimize { background: #c0c0c0; }
-        .maximize { background: #c0c0c0; }
-        .close { background: #c0c0c0; color: black; font-weight: bold; }
-
-        .dev-content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .dev-logo {
+        .logo-text {
             font-size: 18px;
-            font-weight: bold;
-            color: #003d79;
-            margin-bottom: 15px;
+            font-weight: 600;
+            color: #e0e0e0;
         }
 
-        .dev-message {
-            font-size: 12px;
-            margin-bottom: 15px;
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            display: flex;
+        }
+
+        .search-input {
+            flex: 1;
+            height: 40px;
+            border: 1px solid #333;
+            border-right: none;
+            border-radius: 2px 0 0 2px;
+            padding: 0 16px;
+            font-size: 16px;
+            outline: none;
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        .search-input:focus {
+            border-color: #8B0000;
+            background: #1a1a1a;
+        }
+
+        .search-input::placeholder {
             color: #666;
         }
 
-        .progress-container {
-            background: #ffffff;
-            border: 1px inset #c0c0c0;
-            height: 20px;
-            margin: 10px 0;
-            position: relative;
-        }
-
-        .progress-bar {
-            background: linear-gradient(to right, #316ac5 0%, #4a8bc2 50%, #316ac5 100%);
-            height: 100%;
-            width: 0%;
-            animation: progress 3s ease-in-out infinite;
-        }
-
-        @keyframes progress {
-            0%, 100% { width: 0%; }
-            50% { width: 100%; }
-        }
-
-        .secret-text {
-            font-size: 9px;
-            color: #999;
-            margin-top: 10px;
-        }
-
-        /* Main Application */
-        .main-app {
-            display: none;
-            background: #ece9d8;
-            min-height: 100vh;
-        }
-
-        .taskbar {
-            background: linear-gradient(to bottom, #245edb 0%, #1941a5 100%);
-            height: 30px;
+        .search-btn {
+            width: 64px;
+            height: 40px;
+            border: 1px solid #333;
+            border-radius: 0 2px 2px 0;
+            background: #262626;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            padding: 0 10px;
-            border-top: 1px solid #4a8bc2;
+            justify-content: center;
+            color: #e0e0e0;
+            font-size: 16px;
         }
 
-        .start-btn {
-            background: linear-gradient(to bottom, #5ba048 0%, #4a7c59 100%);
-            border: 1px outset #5ba048;
-            color: white;
-            padding: 4px 15px;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-right: 10px;
+        .search-btn:hover {
+            background: #333;
         }
 
-        .start-btn:active {
-            border: 1px inset #5ba048;
-        }
-
-        .window-title {
-            color: white;
-            font-size: 11px;
-            margin-left: 10px;
-        }
-
-        .content-window {
-            background: #ece9d8;
-            margin: 10px;
-            border: 2px outset #ece9d8;
-            height: calc(100vh - 70px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .title-bar {
-            background: linear-gradient(to bottom, #0a58b0 0%, #003d79 100%);
-            color: white;
-            padding: 4px 8px;
-            font-weight: bold;
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .menu-bar {
-            background: #ece9d8;
-            border-bottom: 1px solid #999;
-            padding: 2px 5px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .menu-item {
-            padding: 3px 8px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .menu-item:hover {
-            background: #316ac5;
-            color: white;
-        }
-
-        .toolbar {
-            background: #ece9d8;
-            padding: 8px;
-            border-bottom: 1px solid #999;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            border: 1px inset #c0c0c0;
-            padding: 2px 4px;
-            font-size: 11px;
-            width: 200px;
-            background: white;
-        }
-
-        .btn {
-            background: #ece9d8;
-            border: 1px outset #ece9d8;
-            padding: 3px 12px;
-            font-size: 11px;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn:active {
-            border: 1px inset #ece9d8;
-        }
-
-        .btn:hover {
-            background: #f0f0f0;
-        }
-
-        .main-content {
-            flex: 1;
-            background: white;
-            margin: 8px;
-            border: 1px inset #c0c0c0;
-            overflow: auto;
-            padding: 10px;
+        /* Main Content */
+        .main-container {
+            margin-top: 56px;
+            padding: 24px;
+            min-height: calc(100vh - 56px);
         }
 
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            padding: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1920px;
+            margin: 0 auto;
         }
 
-        .video-item {
-            background: #f0f0f0;
-            border: 1px outset #f0f0f0;
-            padding: 8px;
+        .video-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
             cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #333;
         }
 
-        .video-item:hover {
-            background: #e0e0e0;
+        .video-card:hover {
+            transform: translateY(-4px);
+            border-color: #8B0000;
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.3);
         }
 
-        .video-item:active {
-            border: 1px inset #f0f0f0;
-        }
-
-        .video-thumb {
+        .video-thumbnail {
+            position: relative;
             width: 100%;
-            height: 140px;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-thumb-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 1px solid #999;
-            margin-bottom: 5px;
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid #333;
+        }
+
+        .video-details {
+            padding: 12px;
         }
 
         .video-title {
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 3px;
-            color: #000080;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0e0e0;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .video-info {
-            font-size: 9px;
-            color: #666;
-            display: flex;
-            justify-content: space-between;
+        .video-metadata {
+            font-size: 13px;
+            color: #888;
         }
 
-        .pagination {
-            text-align: center;
-            padding: 10px;
-            background: #ece9d8;
-            border-top: 1px solid #999;
-        }
-
-        .page-btn {
-            background: #ece9d8;
-            border: 1px outset #ece9d8;
-            padding: 2px 8px;
-            margin: 0 2px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-        .page-btn:active {
-            border: 1px inset #ece9d8;
-        }
-
-        .page-btn.active {
-            background: #316ac5;
-            color: white;
-            border: 1px inset #316ac5;
-        }
-
-        /* Fullscreen Video Modal */
+        /* Video Modal */
         .video-modal {
             display: none;
             position: fixed;
@@ -307,285 +197,179 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #000;
-            z-index: 1000;
+            background: #0d0d0d;
+            z-index: 2000;
             overflow: hidden;
         }
 
-        .fullscreen-container {
-            width: 100%;
-            height: 100%;
+        .modal-header {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 0 24px;
+            height: 56px;
             display: flex;
-            flex-direction: column;
-        }
-
-        .fullscreen-header {
-            background: linear-gradient(to bottom, #0a58b0 0%, #003d79 100%);
-            color: white;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 1001;
+            border-bottom: 1px solid #333;
         }
 
-        .back-btn {
-            background: #ece9d8;
-            border: 1px outset #ece9d8;
-            padding: 4px 12px;
-            font-size: 11px;
+        .modal-back-btn {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 24px;
             cursor: pointer;
-            color: black;
-            font-family: inherit;
+            padding: 8px;
+            border-radius: 4px;
+            margin-right: 16px;
         }
 
-        .back-btn:active {
-            border: 1px inset #ece9d8;
+        .modal-back-btn:hover {
+            background: #333;
         }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .miniplayer-btn {
-            background: #ece9d8;
-            border: 1px outset #ece9d8;
-            padding: 4px 8px;
-            font-size: 11px;
-            cursor: pointer;
-            color: black;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .miniplayer-btn:active {
-            border: 1px inset #ece9d8;
-        }
-
-        .miniplayer-btn:hover {
-            background: #f0f0f0;
-        }
-
-        /* Miniplayer Popup */
-        .miniplayer-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 300px;
-            background: #000;
-            border: 2px outset #c0c0c0;
-            z-index: 2000;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .miniplayer-header {
-            background: linear-gradient(to bottom, #0a58b0 0%, #003d79 100%);
-            color: white;
-            padding: 4px 8px;
-            font-weight: bold;
-            font-size: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 20px;
-        }
-
-        .miniplayer-title {
+        .modal-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 400;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 300px;
         }
 
-        .miniplayer-controls {
-            display: flex;
-            gap: 2px;
-        }
-
-        .miniplayer-close {
-            width: 14px;
-            height: 14px;
-            background: #c0c0c0;
-            border: 1px outset #c0c0c0;
-            font-size: 8px;
-            text-align: center;
-            line-height: 12px;
+        .miniplayer-btn {
+            background: #8B0000;
+            border: 1px solid #660000;
+            color: white;
+            padding: 8px 16px;
             cursor: pointer;
-            color: black;
-            font-weight: bold;
+            border-radius: 4px;
+            font-size: 12px;
         }
 
-        .miniplayer-close:active {
-            border: 1px inset #c0c0c0;
+        .miniplayer-btn:hover {
+            background: #a00000;
         }
 
-        .miniplayer-video {
-            width: 100%;
-            height: calc(100% - 20px);
-            object-fit: contain;
-            background: #000;
-        }
-
-        .miniplayer-resize-handle {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 10px;
-            height: 10px;
-            background: #c0c0c0;
-            border: 1px outset #c0c0c0;
-            cursor: nw-resize;
-        }
-
-        .miniplayer-resize-handle:active {
-            border: 1px inset #c0c0c0;
-        }
-
-        .video-content {
-            flex: 1;
+        .modal-content {
             display: flex;
-            height: calc(100vh - 40px);
-            overflow: hidden;
-            gap: 12px;
-            padding: 12px;
+            height: calc(100vh - 56px);
         }
 
-        .video-main-section {
-            flex: 2;
+        .video-main {
+            flex: 1;
             display: flex;
             flex-direction: column;
             min-width: 0;
         }
 
-        .video-player-container {
+        .video-player-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: #000;
-            border: 1px solid #999;
-            margin-bottom: 12px;
-            position: relative;
-            aspect-ratio: 16/9;
         }
 
         .video-player {
             width: 100%;
             height: 100%;
+            max-height: calc(100vh - 300px);
             object-fit: contain;
         }
 
-        .video-info-section {
-            background: #f0f0f0;
-            border: 1px outset #f0f0f0;
-            padding: 12px;
-            margin-bottom: 12px;
+        .video-info {
+            background: #1a1a1a;
+            padding: 20px 24px;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
 
-        .video-title-main {
-            font-weight: bold;
-            font-size: 14px;
+        .video-title-large {
+            font-size: 20px;
+            font-weight: 400;
             margin-bottom: 8px;
-            color: #000080;
             line-height: 1.3;
+            color: #e0e0e0;
         }
 
-        .video-metadata {
-            font-size: 11px;
-            color: #666;
+        .video-stats {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #888;
         }
 
-        .video-description-main {
-            font-size: 11px;
-            color: #333;
-            line-height: 1.4;
-            background: white;
-            padding: 8px;
-            border: 1px inset #c0c0c0;
-            max-height: 100px;
+        .video-description {
+            background: #262626;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #ccc;
+            max-height: 120px;
             overflow-y: auto;
+            border: 1px solid #333;
         }
 
-        .video-sidebar {
-            flex: 1;
-            min-width: 300px;
-            max-width: 400px;
-            background: #ece9d8;
-            border: 2px outset #ece9d8;
+        .video-sidebar-modal {
+            width: 400px;
+            background: #1a1a1a;
+            border-left: 1px solid #333;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
-        .related-section {
-            flex: 1;
-            background: #f8f8f8;
-            border: 1px inset #c0c0c0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            margin: 8px;
+        .sidebar-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #333;
+            background: #1a1a1a;
         }
 
-        .related-header {
-            background: #ece9d8;
-            padding: 8px 12px;
-            font-weight: bold;
-            font-size: 11px;
-            border-bottom: 1px solid #999;
-            color: #000080;
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #e0e0e0;
         }
 
-        .related-videos-container {
+        .related-list {
             flex: 1;
             overflow-y: auto;
-            overflow-x: hidden;
-            padding: 8px;
+            padding: 8px 0;
         }
 
-        .related-item {
-            background: white;
-            border: 1px outset white;
-            margin-bottom: 8px;
+        .related-video {
+            display: flex;
+            padding: 8px 24px;
             cursor: pointer;
-            display: flex;
-            align-items: flex-start;
-            padding: 6px;
-            transition: background-color 0.2s;
+            transition: background-color 0.1s ease;
         }
 
-        .related-item:hover {
-            background: #e0e0e0;
-            border: 1px inset #e0e0e0;
+        .related-video:hover {
+            background: #262626;
         }
 
-        .related-thumb {
-            width: 80px;
-            height: 60px;
+        .related-thumbnail {
+            width: 168px;
+            height: 94px;
             object-fit: cover;
-            border: 1px solid #999;
-            margin-right: 8px;
+            border-radius: 6px;
+            margin-right: 12px;
             flex-shrink: 0;
+            border: 1px solid #333;
+            filter: brightness(0.9);
         }
 
-        .related-info {
+        .related-content {
             flex: 1;
             min-width: 0;
         }
 
         .related-title {
-            font-size: 10px;
-            color: #000080;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 400;
+            color: #e0e0e0;
             line-height: 1.3;
             margin-bottom: 4px;
             display: -webkit-box;
@@ -595,254 +379,382 @@
         }
 
         .related-stats {
-            font-size: 9px;
-            color: #666;
+            font-size: 13px;
+            color: #888;
         }
 
-        .loading {
+        /* Pagination */
+        .pagination {
+            background: #1a1a1a;
+            padding: 20px;
             text-align: center;
-            padding: 50px;
-            font-size: 11px;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            background: #262626;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            margin: 0 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #e0e0e0;
+        }
+
+        .page-btn:hover {
+            background: #333;
+            border-color: #8B0000;
+        }
+
+        .page-btn.active {
+            background: #8B0000;
+            color: white;
+            border-color: #660000;
+        }
+
+        /* Miniplayer */
+        .miniplayer {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 340px;
+            height: 191px;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid #8B0000;
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.4);
+            z-index: 3000;
+            overflow: hidden;
+        }
+
+        .miniplayer-header {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 8px 12px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 32px;
+            cursor: move;
+            border-bottom: 1px solid #333;
+        }
+
+        .miniplayer-title-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 400;
+        }
+
+        .miniplayer-close {
+            background: #8B0000;
+            border: 1px solid #660000;
+            color: white;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .miniplayer-close:hover {
+            background: #a00000;
+        }
+
+        .miniplayer-video {
+            width: 100%;
+            height: calc(100% - 32px);
+            object-fit: contain;
+        }
+
+        /* Loading States */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
             color: #666;
         }
 
-        .status-bar {
-            background: #ece9d8;
-            border-top: 1px solid #999;
-            height: 20px;
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid #8B0000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            color: #666;
+        }
+
+        .error-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #8B0000;
+        }
+
+        .error-message {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #888;
+        }
+
+        .error-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Under Development */
+        .dev-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0d0d0d;
+            z-index: 5000;
             display: flex;
             align-items: center;
-            padding: 0 8px;
-            font-size: 9px;
+            justify-content: center;
+        }
+
+        .dev-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid #333;
+            max-width: 400px;
+        }
+
+        .dev-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8B0000;
+            margin-bottom: 16px;
+        }
+
+        .dev-message {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+        }
+
+        .dev-subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        .dev-progress {
+            background: #333;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .dev-progress-bar {
+            background: #8B0000;
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            animation: progress 3s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0%, 100% { width: 0%; }
+            50% { width: 100%; }
+        }
+
+        .dev-hint {
+            font-size: 12px;
             color: #666;
+            font-style: italic;
         }
 
-        /* Custom Scrollbar */
-        .related-videos-container::-webkit-scrollbar,
-        .video-description-main::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        .related-videos-container::-webkit-scrollbar-track,
-        .video-description-main::-webkit-scrollbar-track {
-            background: #ece9d8;
-            border: 1px inset #c0c0c0;
-        }
-
-        .related-videos-container::-webkit-scrollbar-thumb,
-        .video-description-main::-webkit-scrollbar-thumb {
-            background: #c0c0c0;
-            border: 1px outset #c0c0c0;
-        }
-
-        .related-videos-container::-webkit-scrollbar-thumb:hover,
-        .video-description-main::-webkit-scrollbar-thumb:hover {
-            background: #a0a0a0;
-        }
-
-        /* Mobile Responsiveness */
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .dev-window {
-                width: 90%;
+            .header {
+                padding: 0 8px;
             }
             
-            .search-box {
-                width: 150px;
+            .search-container {
+                max-width: none;
+                margin: 0 16px;
             }
             
             .video-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 16px;
+                padding: 16px 0;
             }
             
-            .video-content {
+            .main-container {
+                padding: 16px;
+            }
+            
+            .modal-content {
                 flex-direction: column;
-                gap: 8px;
-                padding: 8px;
             }
             
-            .video-main-section {
-                flex: none;
+            .video-sidebar-modal {
+                width: 100%;
+                height: 40%;
+                border-left: none;
+                border-top: 1px solid #333;
             }
             
-            .video-player-container {
-                aspect-ratio: 16/9;
-                margin-bottom: 8px;
-            }
-            
-            .video-sidebar {
-                min-width: 0;
-                max-width: none;
-                height: 400px;
-                flex: none;
-            }
-            
-            .related-item {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .related-thumb {
-                width: 80px;
-                height: 60px;
-                margin-right: 8px;
-                margin-bottom: 0;
+            .miniplayer {
+                bottom: 12px;
+                right: 12px;
+                width: 280px;
+                height: 157px;
             }
         }
 
         @media (max-width: 480px) {
-            .fullscreen-header {
-                padding: 4px 8px;
-                font-size: 10px;
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
             
-            .back-btn {
-                padding: 2px 8px;
-                font-size: 10px;
+            .miniplayer {
+                width: calc(100vw - 24px);
+                height: auto;
+                aspect-ratio: 16/9;
             }
-            
-            .video-content {
-                padding: 4px;
-            }
-            
-            .video-info-section {
-                padding: 8px;
-            }
-            
-            .video-title-main {
-                font-size: 12px;
-            }
-            
-            .video-sidebar {
-                height: 300px;
-            }
+        }
+
+        /* Custom Scrollbar */
+        .related-list::-webkit-scrollbar,
+        .video-description::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .related-list::-webkit-scrollbar-track,
+        .video-description::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .related-list::-webkit-scrollbar-thumb,
+        .video-description::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .related-list::-webkit-scrollbar-thumb:hover,
+        .video-description::-webkit-scrollbar-thumb:hover {
+            background: #444;
         }
     </style>
 </head>
 <body>
-    <!-- Under Development Page -->
-    <div class="dev-container" id="devPage">
-        <div class="dev-window">
-            <div class="dev-titlebar">
-                <span>System Setup</span>
-                <div class="window-controls">
-                    <div class="control-btn minimize">_</div>
-                    <div class="control-btn maximize">□</div>
-                    <div class="control-btn close">×</div>
-                </div>
+    <!-- Under Development Overlay -->
+    <div class="dev-overlay" id="devOverlay">
+        <div class="dev-card">
+            <div class="dev-logo">VideoTube</div>
+            <div class="dev-message">Under Development</div>
+            <div class="dev-subtitle">Initializing dark mode...</div>
+            <div class="dev-progress">
+                <div class="dev-progress-bar"></div>
             </div>
-            <div class="dev-content">
-                <div class="dev-logo">VideoTube v1.0</div>
-                <div class="dev-message">UNDER DEVELOPMENT</div>
-                <div>System is initializing components...</div>
-                <div class="progress-container">
-                    <div class="progress-bar"></div>
-                </div>
-                <div class="secret-text">Debug: Press 'x' three times for developer access</div>
-            </div>
+            <div class="dev-hint">JUST GUESS THE KEY</div>
         </div>
     </div>
 
     <!-- Main Application -->
-    <div class="main-app" id="mainApp">
-        <div class="content-window">
-            <div class="title-bar">
-                <span>VideoTube - Internet Explorer</span>
-                <div class="window-controls">
-                    <div class="control-btn minimize">_</div>
-                    <div class="control-btn maximize">□</div>
-                    <div class="control-btn close">×</div>
+    <div class="main-app" id="mainApp" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <a href="#" class="logo" onclick="loadTrending()">
+                <div class="logo-icon">VT</div>
+                <span class="logo-text">VideoTube</span>
+            </a>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search videos...">
+                <button class="search-btn" onclick="searchVideos()">🔍</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-container">
+            <div class="video-grid" id="videoGrid">
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <div>Loading videos...</div>
                 </div>
             </div>
             
-            <div class="menu-bar">
-                <div class="menu-item">File</div>
-                <div class="menu-item">Edit</div>
-                <div class="menu-item">View</div>
-                <div class="menu-item">Favorites</div>
-                <div class="menu-item">Tools</div>
-                <div class="menu-item">Help</div>
-            </div>
-            
-            <div class="toolbar">
-                <button class="btn" onclick="window.history.back()">← Back</button>
-                <button class="btn" onclick="window.history.forward()">Forward →</button>
-                <button class="btn" onclick="location.reload()">Refresh</button>
-                <input type="text" class="search-box" id="searchInput" placeholder="Search videos..." value="http://34.131.66.160:5000/trending">
-                <button class="btn" onclick="searchVideos()">Go</button>
-                <button class="btn" onclick="loadTrending()">Trending</button>
-            </div>
-            
-            <div class="main-content">
-                <div class="video-grid" id="contentArea">
-                    <div class="loading">Loading trending videos...</div>
-                </div>
-                
-                <div class="pagination" id="pagination"></div>
-            </div>
-            
-            <div class="status-bar">
-                <span id="statusText">Ready</span>
-            </div>
+            <div class="pagination" id="pagination"></div>
+        </main>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-header">
+            <button class="modal-back-btn" onclick="closeModal()">←</button>
+            <span class="modal-title" id="modalTitleText">VideoTube</span>
+            <button class="miniplayer-btn" onclick="openMiniplayer()">Miniplayer</button>
         </div>
         
-        <div class="taskbar">
-            <button class="start-btn">Start</button>
-            <div class="window-title">VideoTube - Internet Explorer</div>
-        </div>
-    </div>
-
-    <!-- Fullscreen Video Modal -->
-    <div class="video-modal" id="videoModal">
-        <div class="fullscreen-container">
-            <div class="fullscreen-header">
-                <button class="back-btn" onclick="closeModal()">← Back to VideoTube</button>
-                <div class="header-controls">
-                    <button class="miniplayer-btn" onclick="openMiniplayer()" title="Open Miniplayer">
-                        <span>▶</span> Miniplayer
-                    </button>
-                    <span id="modalTitle">Video Player</span>
+        <div class="modal-content">
+            <div class="video-main">
+                <div class="video-player-wrapper">
+                    <video class="video-player" id="videoPlayer" controls></video>
+                </div>
+                
+                <div class="video-info">
+                    <div class="video-title-large" id="videoTitleLarge">Loading...</div>
+                    <div class="video-stats" id="videoStatsLarge">
+                        <span>Loading...</span>
+                    </div>
+                    <div class="video-description" id="videoDescriptionLarge">
+                        Loading video description...
+                    </div>
                 </div>
             </div>
             
-            <div class="video-content">
-                <div class="video-main-section">
-                    <div class="video-player-container">
-                        <video class="video-player" id="videoPlayer" controls autoplay></video>
-                    </div>
-                    
-                    <div class="video-info-section">
-                        <div class="video-title-main" id="videoTitleLarge">Loading...</div>
-                        <div class="video-metadata" id="videoStats">
-                            <span>Loading...</span>
-                        </div>
-                        <div class="video-description-main" id="videoDescription">
-                            Loading video details...
-                        </div>
-                    </div>
+            <div class="video-sidebar-modal">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Related Videos</div>
                 </div>
-                
-                <div class="video-sidebar">
-                    <div class="related-section">
-                        <div class="related-header">Related Videos</div>
-                        <div class="related-videos-container" id="relatedVideos">
-                            <div class="loading">Loading related videos...</div>
-                        </div>
+                <div class="related-list" id="relatedVideosList">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <div>Loading...</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Miniplayer Popup -->
-    <div class="miniplayer-popup" id="miniplayerPopup">
-        <div class="miniplayer-header">
-            <div class="miniplayer-title" id="miniplayerTitle">Video Player</div>
-            <div class="miniplayer-controls">
-                <div class="miniplayer-close" onclick="closeMiniplayer()">×</div>
-            </div>
+    <!-- Miniplayer -->
+    <div class="miniplayer" id="miniplayer">
+        <div class="miniplayer-header" id="miniplayerHeader">
+            <div class="miniplayer-title-text" id="miniplayerTitleText">VideoTube Player</div>
+            <button class="miniplayer-close" onclick="closeMiniplayer()">×</button>
         </div>
-        <video class="miniplayer-video" id="miniplayerVideo" controls autoplay></video>
-        <div class="miniplayer-resize-handle" id="resizeHandle"></div>
+        <video class="miniplayer-video" id="miniplayerVideo" controls></video>
     </div>
 
     <script>
@@ -855,12 +767,8 @@
         let keyPressTimer = null;
         let currentHls = null;
         let currentMiniplayerHls = null;
-        let isDragging = false;
-        let isResizing = false;
-        let dragOffset = { x: 0, y: 0 };
-        let resizeStart = { x: 0, y: 0, width: 0, height: 0 };
 
-        // Secret key combination to access main app
+        // Secret access code
         document.addEventListener('keydown', function(event) {
             if (event.key.toLowerCase() === 'x') {
                 keyPressCount++;
@@ -874,7 +782,7 @@
                 }, 1000);
                 
                 if (keyPressCount >= 3) {
-                    document.getElementById('devPage').style.display = 'none';
+                    document.getElementById('devOverlay').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     loadTrending();
                     keyPressCount = 0;
@@ -893,8 +801,7 @@
             const searchInput = document.getElementById('searchInput');
             let query = searchInput.value.trim();
             
-            // Extract query from URL-like input
-            if (query.includes('localhost:5000/')) {
+            if (query.includes('localhost:5000/') || query.includes('34.131.66.160:5000/')) {
                 const parts = query.split('/');
                 query = parts[parts.length - 1] || 'trending';
             }
@@ -907,18 +814,15 @@
             currentQuery = query;
             currentPage = page;
             showLoading();
-            updateStatus('Searching...');
             
             try {
                 const response = await fetch(`${API_BASE}/search/${encodeURIComponent(query)}/${page}`);
                 const data = await response.json();
                 displayVideos(data.searchResult);
                 updatePagination(data.pagination);
-                updateStatus(`Found ${data.searchResult?.length || 0} videos`);
             } catch (error) {
                 console.error('Search error:', error);
                 showError('Failed to search videos');
-                updateStatus('Error occurred');
             }
         }
 
@@ -926,41 +830,43 @@
             currentQuery = 'trending';
             currentPage = page;
             showLoading();
-            updateStatus('Loading trending videos...');
-            
-            const searchInput = document.getElementById('searchInput');
-            searchInput.value = window.location.hostname === 'localhost' 
-                ? 'http://34.131.66.160:5000/big' 
-                : '/big';
             
             try {
                 const response = await fetch(`${API_BASE}/search/big/${page}`);
                 const data = await response.json();
                 displayVideos(data.searchResult);
                 updatePagination(data.pagination);
-                updateStatus(`Loaded ${data.searchResult?.length || 0} trending videos`);
             } catch (error) {
                 console.error('Trending error:', error);
                 showError('Failed to load trending videos');
-                updateStatus('Error occurred');
             }
         }
 
         function displayVideos(videos) {
-            const contentArea = document.getElementById('contentArea');
+            const videoGrid = document.getElementById('videoGrid');
             
             if (!videos || videos.length === 0) {
-                contentArea.innerHTML = '<div class="loading">No videos found</div>';
+                videoGrid.innerHTML = `
+                    <div class="error-container">
+                        <div class="error-icon">📺</div>
+                        <div class="error-message">No videos found</div>
+                        <div class="error-subtitle">Try searching for something else</div>
+                    </div>
+                `;
                 return;
             }
             
-            contentArea.innerHTML = videos.map(video => `
-                <div class="video-item" onclick="openVideoModal('${video.pageURL}')">
-                    <img class="video-thumb" src="${video.thumbURL || video.imageURL}" alt="${video.title}" loading="lazy">
-                    <div class="video-title">${video.title}</div>
-                    <div class="video-info">
-                        <span>${formatViews(video.views)} views</span>
-                        <span>${formatDuration(video.duration)}</span>
+            videoGrid.innerHTML = videos.map(video => `
+                <div class="video-card" onclick="openVideoModal('${video.pageURL}')">
+                    <div class="video-thumbnail">
+                        <img class="video-thumb-img" src="${video.thumbURL || video.imageURL}" alt="${video.title}" loading="lazy">
+                        <div class="video-duration">${formatDuration(video.duration)}</div>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-title">${video.title}</div>
+                        <div class="video-metadata">
+                            <span>${formatViews(video.views)} views</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -968,15 +874,18 @@
 
         function updatePagination(pagination) {
             const paginationEl = document.getElementById('pagination');
-            if (!pagination) return;
+            if (!pagination || pagination.totalPages <= 1) {
+                paginationEl.style.display = 'none';
+                return;
+            }
             
+            paginationEl.style.display = 'block';
             let paginationHTML = '';
             
             if (pagination.hasPrevious) {
-                paginationHTML += `<button class="page-btn" onclick="changePage(${pagination.currentPage - 1})">« Previous</button>`;
+                paginationHTML += `<button class="page-btn" onclick="changePage(${pagination.currentPage - 1})">Previous</button>`;
             }
             
-            // Show a few page numbers
             const startPage = Math.max(1, pagination.currentPage - 2);
             const endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
             
@@ -986,7 +895,7 @@
             }
             
             if (pagination.hasNext) {
-                paginationHTML += `<button class="page-btn" onclick="changePage(${pagination.currentPage + 1})">Next »</button>`;
+                paginationHTML += `<button class="page-btn" onclick="changePage(${pagination.currentPage + 1})">Next</button>`;
             }
             
             paginationEl.innerHTML = paginationHTML;
@@ -1004,31 +913,30 @@
             const modal = document.getElementById('videoModal');
             const videoPlayer = document.getElementById('videoPlayer');
             const videoTitleLarge = document.getElementById('videoTitleLarge');
-            const videoStats = document.getElementById('videoStats');
-            const videoDescription = document.getElementById('videoDescription');
-            const relatedVideos = document.getElementById('relatedVideos');
-            const modalTitle = document.getElementById('modalTitle');
+            const videoStatsLarge = document.getElementById('videoStatsLarge');
+            const videoDescriptionLarge = document.getElementById('videoDescriptionLarge');
+            const relatedVideosList = document.getElementById('relatedVideosList');
+            const modalTitleText = document.getElementById('modalTitleText');
             
-            // Show modal immediately
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
             
-            // Reset content
             videoTitleLarge.textContent = 'Loading...';
-            videoStats.innerHTML = '<span>Loading...</span>';
-            videoDescription.textContent = 'Loading video details...';
-            relatedVideos.innerHTML = '<div class="loading">Loading related videos...</div>';
-            modalTitle.textContent = 'Loading Video...';
-            
-            updateStatus('Loading video...');
+            videoStatsLarge.innerHTML = '<span>Loading...</span>';
+            videoDescriptionLarge.textContent = 'Loading...';
+            modalTitleText.textContent = 'Loading...';
+            relatedVideosList.innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <div>Loading...</div>
+                </div>
+            `;
             
             try {
                 const response = await fetch(`${API_BASE}/details/${encodeURIComponent(pageURL)}`);
                 const data = await response.json();
                 
-                // Setup HLS video player
                 if (data.streamUrl) {
-                    // Clean up previous HLS instance
                     if (currentHls) {
                         currentHls.destroy();
                         currentHls = null;
@@ -1043,59 +951,57 @@
                         currentHls.loadSource(data.streamUrl);
                         currentHls.attachMedia(videoPlayer);
                         
-                        currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
-                            console.log('HLS manifest loaded');
-                            updateStatus('Video loaded successfully');
-                        });
-                        
                         currentHls.on(Hls.Events.ERROR, function(event, data) {
-                            console.error('HLS error:', data);
                             if (data.fatal) {
                                 videoPlayer.src = data.streamUrl;
                             }
                         });
                     } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
                         videoPlayer.src = data.streamUrl;
-                        updateStatus('Video loaded successfully');
-                    } else {
-                        console.error('HLS not supported');
-                        updateStatus('Video format not supported');
                     }
                 }
                 
-                // Update video details
                 if (data.video) {
                     videoTitleLarge.textContent = data.video.title;
-                    modalTitle.textContent = data.video.title;
-                    videoStats.innerHTML = `
+                    modalTitleText.textContent = data.video.title;
+                    videoStatsLarge.innerHTML = `
                         <span>${formatViews(data.video.views)} views</span>
+                        <span>•</span>
                         <span>${formatDuration(data.video.duration)}</span>
                     `;
-                    videoDescription.textContent = data.video.description || 'No description available.';
+                    videoDescriptionLarge.textContent = data.video.description || 'No description available.';
                 }
                 
-                // Display related videos with scrollable layout
                 if (data.relatedVideos && data.relatedVideos.length > 0) {
-                    relatedVideos.innerHTML = data.relatedVideos.map(video => `
-                        <div class="related-item" onclick="openVideoModal('${video.pageURL}')">
-                            <img class="related-thumb" src="${video.thumbURL || video.imageURL}" alt="${video.title}" loading="lazy">
-                            <div class="related-info">
+                    relatedVideosList.innerHTML = data.relatedVideos.map(video => `
+                        <div class="related-video" onclick="openVideoModal('${video.pageURL}')">
+                            <img class="related-thumbnail" src="${video.thumbURL || video.imageURL}" alt="${video.title}" loading="lazy">
+                            <div class="related-content">
                                 <div class="related-title">${video.title}</div>
-                                <div class="related-stats">${formatViews(video.views)} views • ${formatDuration(video.duration)}</div>
+                                <div class="related-stats">${formatViews(video.views)} views</div>
                             </div>
                         </div>
                     `).join('');
                 } else {
-                    relatedVideos.innerHTML = '<div style="text-align: center; color: #666; font-size: 10px; padding: 20px;">No related videos found</div>';
+                    relatedVideosList.innerHTML = `
+                        <div class="error-container">
+                            <div style="color: #666; font-size: 14px;">No related videos</div>
+                        </div>
+                    `;
                 }
                 
             } catch (error) {
                 console.error('Video details error:', error);
                 videoTitleLarge.textContent = 'Failed to load video';
-                videoStats.innerHTML = '<span style="color: red;">Error occurred</span>';
-                videoDescription.textContent = 'Failed to load video details';
-                relatedVideos.innerHTML = '<div style="color: red; text-align: center; padding: 20px; font-size: 10px;">Failed to load related videos</div>';
-                updateStatus('Error loading video');
+                videoStatsLarge.innerHTML = '<span style="color: #8B0000;">Error occurred</span>';
+                videoDescriptionLarge.textContent = 'Failed to load video details.';
+                modalTitleText.textContent = 'Error';
+                relatedVideosList.innerHTML = `
+                    <div class="error-container">
+                        <div class="error-icon">⚠️</div>
+                        <div class="error-message">Failed to load</div>
+                    </div>
+                `;
             }
         }
 
@@ -1103,43 +1009,33 @@
             const modal = document.getElementById('videoModal');
             const videoPlayer = document.getElementById('videoPlayer');
             
-            // Hide modal
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
             
-            // Stop video playback
             videoPlayer.pause();
             videoPlayer.src = '';
             
-            // Clean up HLS instance
             if (currentHls) {
                 currentHls.destroy();
                 currentHls = null;
             }
-            
-            updateStatus('Ready');
         }
 
         function openMiniplayer() {
-            const miniplayerPopup = document.getElementById('miniplayerPopup');
+            const miniplayer = document.getElementById('miniplayer');
             const miniplayerVideo = document.getElementById('miniplayerVideo');
-            const miniplayerTitle = document.getElementById('miniplayerTitle');
+            const miniplayerTitleText = document.getElementById('miniplayerTitleText');
             const videoPlayer = document.getElementById('videoPlayer');
-            const modalTitle = document.getElementById('modalTitle');
+            const modalTitleText = document.getElementById('modalTitleText');
             
-            // Set title
-            miniplayerTitle.textContent = modalTitle.textContent;
+            miniplayerTitleText.textContent = modalTitleText.textContent;
+            miniplayer.style.display = 'block';
             
-            // Show miniplayer
-            miniplayerPopup.style.display = 'block';
-            
-            // Copy current video source to miniplayer
             if (videoPlayer.src) {
                 miniplayerVideo.src = videoPlayer.src;
                 miniplayerVideo.currentTime = videoPlayer.currentTime;
                 miniplayerVideo.play();
             } else if (currentHls) {
-                // Setup HLS for miniplayer
                 if (currentMiniplayerHls) {
                     currentMiniplayerHls.destroy();
                 }
@@ -1154,119 +1050,101 @@
                     currentMiniplayerHls.attachMedia(miniplayerVideo);
                     
                     currentMiniplayerHls.on(Hls.Events.MANIFEST_PARSED, function() {
-                        console.log('Miniplayer HLS manifest loaded');
                         miniplayerVideo.currentTime = videoPlayer.currentTime;
                         miniplayerVideo.play();
                     });
                 }
             }
             
-            updateStatus('Miniplayer opened');
+            closeModal();
         }
 
         function closeMiniplayer() {
-            const miniplayerPopup = document.getElementById('miniplayerPopup');
+            const miniplayer = document.getElementById('miniplayer');
             const miniplayerVideo = document.getElementById('miniplayerVideo');
             
-            // Hide miniplayer
-            miniplayerPopup.style.display = 'none';
-            
-            // Stop video playback
+            miniplayer.style.display = 'none';
             miniplayerVideo.pause();
             miniplayerVideo.src = '';
             
-            // Clean up HLS instance
             if (currentMiniplayerHls) {
                 currentMiniplayerHls.destroy();
                 currentMiniplayerHls = null;
             }
-            
-            updateStatus('Miniplayer closed');
         }
 
-        // Miniplayer drag functionality
         function initMiniplayerDrag() {
-            const miniplayerPopup = document.getElementById('miniplayerPopup');
-            const miniplayerHeader = document.querySelector('.miniplayer-header');
-            const resizeHandle = document.getElementById('resizeHandle');
+            const miniplayer = document.getElementById('miniplayer');
+            const header = document.getElementById('miniplayerHeader');
+            let isDragging = false;
+            let dragOffset = { x: 0, y: 0 };
             
-            // Drag functionality
-            miniplayerHeader.addEventListener('mousedown', function(e) {
+            header.addEventListener('mousedown', function(e) {
                 if (e.target.classList.contains('miniplayer-close')) return;
                 
                 isDragging = true;
-                const rect = miniplayerPopup.getBoundingClientRect();
+                const rect = miniplayer.getBoundingClientRect();
                 dragOffset.x = e.clientX - rect.left;
                 dragOffset.y = e.clientY - rect.top;
                 e.preventDefault();
             });
             
-            // Resize functionality
-            resizeHandle.addEventListener('mousedown', function(e) {
-                isResizing = true;
-                const rect = miniplayerPopup.getBoundingClientRect();
-                resizeStart.x = e.clientX;
-                resizeStart.y = e.clientY;
-                resizeStart.width = rect.width;
-                resizeStart.height = rect.height;
-                e.preventDefault();
-            });
-            
-            // Global mouse events
             document.addEventListener('mousemove', function(e) {
-                if (isDragging) {
-                    const newX = e.clientX - dragOffset.x;
-                    const newY = e.clientY - dragOffset.y;
-                    
-                    // Keep within viewport bounds
-                    const maxX = window.innerWidth - miniplayerPopup.offsetWidth;
-                    const maxY = window.innerHeight - miniplayerPopup.offsetHeight;
-                    
-                    miniplayerPopup.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
-                    miniplayerPopup.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
-                    miniplayerPopup.style.transform = 'none';
-                }
+                if (!isDragging) return;
                 
-                if (isResizing) {
-                    const deltaX = e.clientX - resizeStart.x;
-                    const deltaY = e.clientY - resizeStart.y;
-                    
-                    const newWidth = Math.max(300, resizeStart.width + deltaX);
-                    const newHeight = Math.max(200, resizeStart.height + deltaY);
-                    
-                    miniplayerPopup.style.width = newWidth + 'px';
-                    miniplayerPopup.style.height = newHeight + 'px';
-                }
+                const newX = e.clientX - dragOffset.x;
+                const newY = e.clientY - dragOffset.y;
+                
+                const maxX = window.innerWidth - miniplayer.offsetWidth;
+                const maxY = window.innerHeight - miniplayer.offsetHeight;
+                
+                miniplayer.style.right = 'auto';
+                miniplayer.style.bottom = 'auto';
+                miniplayer.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
+                miniplayer.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
             });
             
             document.addEventListener('mouseup', function() {
                 isDragging = false;
-                isResizing = false;
             });
         }
 
         function showLoading() {
-            document.getElementById('contentArea').innerHTML = '<div class="loading">Loading...</div>';
+            document.getElementById('videoGrid').innerHTML = `
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <div>Loading videos...</div>
+                </div>
+            `;
         }
 
         function showError(message) {
-            document.getElementById('contentArea').innerHTML = `<div class="loading" style="color: red;">${message}</div>`;
-        }
-
-        function updateStatus(message) {
-            document.getElementById('statusText').textContent = message;
+            document.getElementById('videoGrid').innerHTML = `
+                <div class="error-container">
+                    <div class="error-icon">⚠️</div>
+                    <div class="error-message">${message}</div>
+                    <div class="error-subtitle">Please try again later</div>
+                </div>
+            `;
         }
 
         function formatDuration(seconds) {
             if (!seconds) return '0:00';
-            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
             const remainingSeconds = seconds % 60;
+            
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
             return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
         }
 
         function formatViews(views) {
             if (!views) return '0';
-            if (views >= 1000000) {
+            if (views >= 1000000000) {
+                return `${(views / 1000000000).toFixed(1)}B`;
+            } else if (views >= 1000000) {
                 return `${(views / 1000000).toFixed(1)}M`;
             } else if (views >= 1000) {
                 return `${(views / 1000).toFixed(1)}K`;
@@ -1274,19 +1152,6 @@
             return views.toString();
         }
 
-        // Close modal when clicking outside video area (but not on sidebar)
-        document.addEventListener('click', function(event) {
-            const modal = document.getElementById('videoModal');
-            const videoPlayerSection = document.querySelector('.video-player-container');
-            
-            if (modal.style.display === 'block' && 
-                event.target === videoPlayerSection && 
-                !event.target.closest('.video-sidebar')) {
-                // Don't close on video player section clicks
-            }
-        });
-
-        // ESC key to close modal
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 const modal = document.getElementById('videoModal');
@@ -1296,15 +1161,16 @@
             }
         });
 
-        // Initialize app
         window.addEventListener('load', function() {
-            // Auto-load trending videos when app starts
-            if (document.getElementById('mainApp').style.display === 'block') {
-                loadTrending();
-            }
-            
-            // Initialize miniplayer drag functionality
             initMiniplayerDrag();
+            
+            setTimeout(() => {
+                if (document.getElementById('devOverlay').style.display !== 'none') {
+                    document.getElementById('devOverlay').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    loadTrending();
+                }
+            }, 3000);
         });
     </script>
 </body>
